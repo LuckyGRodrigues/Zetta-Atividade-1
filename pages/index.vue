@@ -7,7 +7,7 @@
           :rules="anoRules"
           label="Ano Final"
           type="number"
-        ></v-text-field>
+        />
         
         <v-select
           v-model="mesesSelecionados"
@@ -15,53 +15,53 @@
           label="Selecione os meses"
           multiple
           chips
-        ></v-select>
+        />
 
-        <v-btn class="mt-2" type="submit" block>Atualizar</v-btn>
+        <v-btn class="mt-2" type="submit" block>Calcular</v-btn>
       </v-form>
     </v-sheet>
 
-    <dias-mes v-if="mostrarResultado" :anosSelecionados="anosSelecionados" :mesesSelecionados="mesesSelecionados"></dias-mes>
+    <dias-mes v-if="mostrarResultado" :anos-selecionados="anosSelecionados" :meses-selecionados="mesesSelecionados"/>
   </v-app>
 </template>
 
 <script>
-import DiasMes from "../components/diasMes.vue";
+  import DiasMes from "../components/diasMes.vue";
 
-export default {
-  components: {
-    DiasMes,
-  },
-  data() {
-    return {
-      anoFinal: new Date().getFullYear(),
-      anosSelecionados: this.generateAnosSelecionados(new Date().getFullYear()),
-      mesesSelecionados: [],
-      mesesDisponiveis: [
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-      ],
-      anoRules: [
-        (v) => !!v || "Required",
-        (v) => v >= new Date().getFullYear() || "Ano deve ser maior ou igual ao ano atual"
-      ],
-      mostrarResultado: false,
-    };
-  },
-  methods: {
-    generateAnosSelecionados(anoFinal) {
-      const currentYear = new Date().getFullYear();
-      const anos = [];
-      for (let ano = currentYear; ano <= anoFinal; ano++) {
-        anos.push(ano);
-      }
-      return anos;
+  export default {
+    components: {
+      DiasMes,
     },
+    data() {
+      return {
+        anoFinal: new Date().getFullYear(),
+        anosSelecionados: this.generateAnosSelecionados(new Date().getFullYear()),
+        mesesSelecionados: [],
+        mesesDisponiveis: [
+          "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ],
+        anoRules: [
+          (v) => !!v || "Required",
+          (v) => v >= new Date().getFullYear() || "Ano deve ser maior ou igual ao ano atual"
+        ],
+        mostrarResultado: false,
+      };
+    },
+    methods: {
+      generateAnosSelecionados(anoFinal) {
+        const currentYear = new Date().getFullYear();
+        const anos = [];
+        for (let ano = currentYear; ano <= anoFinal; ano++) {
+          anos.push(ano);
+        }
+        return anos;
+      },
 
-    updateAnosSelecionados() {
-      this.anosSelecionados = this.generateAnosSelecionados(this.anoFinal);
-      this.mostrarResultado = true;
+      updateAnosSelecionados() {
+        this.anosSelecionados = this.generateAnosSelecionados(this.anoFinal);
+        this.mostrarResultado = true;
+      },
     },
-  },
-};
+  };
 </script>
